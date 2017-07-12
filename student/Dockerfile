@@ -19,9 +19,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz \
-    && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin \
+    && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
 
-RUN git clone https://github.com/tgross/devopsdays-workshop /root/workshop
+# clone the workshop and make sure we've set up a bash profile
+# with the appropriate environment setup
+RUN git clone https://github.com/tgross/devopsdays-workshop /root/workshop \
+    && cp /root/workshop/.bash_aliases /root/.bash_aliases
 
 WORKDIR /root/workshop
 CMD [ "/bin/bash" ]

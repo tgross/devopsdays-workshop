@@ -36,3 +36,6 @@ echo "PORT=$PORT"
 echo "PRIVATE_IP=$PRIVATE_IP"
 echo "PUBLIC_IP=$PUBLIC_IP"
 echo
+
+
+alias cleanup='docker stop ${ACCOUNT} && docker rm ${ACCOUNT}'
