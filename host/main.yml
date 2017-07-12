@@ -1,0 +1,77 @@
+---
+# This playbook deploys everything we need for prototype workshop host
+# Assumes an Ubuntu VM with Python pre-installed (b/c Ansible requires Python)
+
+- include: password.yml
+
+- hosts: workshop
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+
+  tasks:
+
+    - name: Update apt key
+      apt_key: keyserver='hkp://p80.pool.sks-keyservers.net:80'
+               id='58118E89F3A912897C070ADBF76221572C52609D'
+
+    - name: Add docker.io repo
+      apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+                      state=present
+
+    - name: Update apt cache
+      apt: update_cache=yes
+
+    - name: Install docker
+      apt: name=docker-engine state=installed
+
+    - name: Restart Docker
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: yes
+
+    - name: Add student user
+      user: name=student password={{ student_password }} shell=/bin/bash
+
+      # no need for us to constantly sudo w/ docker
+    - name: Give ubuntu user access to docker
+      user: name={{ item }} groups=docker append=yes
+      with_items:
+        - student
+        - ubuntu
+
+    - name: Install tools
+      apt: name={{ item }} state=installed
+      with_items:
+        - emacs-nox
+        - curl
+        - moreutils
+        - git
+
+    - name: Download Consul
+      get_url:
+        url: https://releases.hashicorp.com/consul/0.8.5/consul_0.8.5_linux_amd64.zip
+        checksum: "SHA256:35dc317c80862c306ea5b1d9bc93709483287f992fd0797d214d1cc1848e7b62"
+        dest: /tmp/consul_0.8.5_linux_amd64.zip
+
+    - name: Install Consul
+      command: unzip /tmp/consul_0.8.5_linux_amd64.zip -d /usr/local/bin
+
+    - name: Add service overlays
+      copy:
+        src: files/{{ item }}
+        dest: /etc/systemd/system/{{ item }}
+      with_items:
+        - docker.service
+        - consul-agent.service
+
+    - name: Add builder
+      copy:
+        src: files/build-all.sh
+        dest: /home/ubuntu/build-all.sh
+
+# TODO:
+# need to configure the sshd_config to run student inside student container:
+#  match group student
+#         forceCommand docker run --rm -it --net=host -v /var/run/docker.sock:/var/run/docker.sock student /bin/bash
