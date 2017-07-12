@@ -12,17 +12,7 @@ Each student can ssh into a machine w/ the exact IP and password given out by in
 $ ssh student@AAA.BBB.CCC.DDD
 ```
 
-
-### Configuration
-
-Once shelled in, we need to make sure that each student has a properly set up environment and that certain environment variables are correctly set up:
-
-```
-$ cd ./exercise00
-$ eval "$(./check.sh)"
-```
-
-The output should be something resembling the following:
+When we log in, the bash profile in the container will make sure each student has a properly set up environment and that certain environment variables are correctly set up. The output should be something resembling the following:
 
 ```
 This workshop will use your GitHub account name as a unique identifier.
