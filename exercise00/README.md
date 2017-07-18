@@ -1,4 +1,4 @@
-# Exercise 0
+# Exercise 0: Development Environment
 
 In this exercise we ssh into the development environment and check that we're properly set up.
 

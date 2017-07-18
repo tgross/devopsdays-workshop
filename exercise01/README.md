@@ -1,4 +1,4 @@
-# Exercise 1
+# Exercise 1: Defining the Problem
 
 This exercise demonstrates some of the operational problems that applications in containers face.
 
