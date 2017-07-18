@@ -17,7 +17,7 @@ When we log in, the bash profile in the container will make sure each student ha
 ```
 This workshop will use your GitHub account name as a unique identifier.
 We won't grant any permissions on the account, but the demo app will
-your avatar from GitHub so please use a real account name.
+use your avatar from GitHub so please use a real account name.
 
 Enter your GitHub account name: <your account name>
 

@@ -2,7 +2,7 @@
 
 echo "This workshop will use your GitHub account name as a unique identifier."
 echo "We won't grant any permissions on the account, but the demo app will"
-echo "your avatar from GitHub so please use a real account name."
+echo "use your avatar from GitHub so please use a real account name."
 echo
 echo -n "Enter your GitHub account name: "
 read -r account
