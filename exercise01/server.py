@@ -4,17 +4,31 @@ from bottle import route, run, template
 import json5
 import requests
 
-
 # ----------------------------------------
-# HTTP routes: fetch the avatar URL from GitHub
+# HTTP routes
 
 @route('/')
-@lru_cache(maxsize=1)
 def index():
+    avatar_url = get_avatar()
+    return template("""<div><h2>{{name}}</h2>
+                       <div><img src={{url}} height="200", width="200"/>
+                       </div></div>""",
+                    url=avatar_url, name=app.config['name'])
+
+@route('/user')
+def user():
+    avatar_url = get_avatar()
+    return { "user": app.config['name'], "url": avatar_url }
+
+
+# ----------------------------------------
+# data: fetch the avatar URL from GitHub
+
+@lru_cache(maxsize=1)
+def get_avatar():
     req = requests.get('https://api.github.com/users/{}'.format(app.config['name']))
     data = req.json()
-    avatar_url = data['avatar_url']
-    return template('<img src={{url}} />', url=avatar_url)
+    return data['avatar_url']
 
 
 # ----------------------------------------

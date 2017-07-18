@@ -60,6 +60,9 @@ curl: (52) Empty reply from server
 
 
 ```bash
+# remove our previous container
+$ cleanup
+
 # run the same container with host networking
 $ docker run -d -p 8080 --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"
 ab4234a46eff
@@ -114,6 +117,9 @@ Edit our config.json5 as follows:
 ```
 
 ```bash
+# remove our previous container
+$ cleanup
+
 # rebuild with the new config file
 $ docker build -t="workshop-$ACCOUNT"
 
@@ -133,6 +139,35 @@ $ curl "localhost:${PORT}"
 ```
 
 Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution. Suitable if you don't need multi-tenant safety.
+
+
+## Run on public IP w/ host networking, random port
+
+We still haven't seen what this looks like, and we bind to localhost. So let's update our configuration to publish the API on the Internet.
+
+Edit our config.json5 as follows:
+
+```json5
+{
+  name: "<fill in your $ACCOUNT>",
+  host: "<fill in your $PUBLIC_IP",
+  port: <fill in your $PORT>
+}
+```
+
+```bash
+# remove our previous container
+$ cleanup
+
+# rebuild with the new config file
+$ docker build -t="workshop-$ACCOUNT"
+
+# run the container again
+$ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"
+14521a456adf
+```
+
+Now you should be able to reach your container from your browser, and fetch your own avatar. The URL `http://${PUBLIC_IP}:${PORT}/user` will reach the JSON API, whereas the URL `http://${PUBLIC_IP}:${PORT}/` will reach a simple web page that shows the avatar and your name.
 
 
 ## Overlay networking
