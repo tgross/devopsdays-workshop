@@ -7,6 +7,10 @@
   become: true
   become_method: sudo
 
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted
+
   tasks:
 
     - name: Update apt key
@@ -29,6 +33,7 @@
         state: restarted
         daemon_reload: yes
 
+      # previously-hashed password
     - include_vars: password.yml
 
     - name: Add student user
@@ -40,6 +45,13 @@
       with_items:
         - student
         - ubuntu
+
+    - name: Update sshd config
+      copy:
+        src: files/sshd_config
+        dest: /etc/ssh/sshd_config
+      notify:
+        - restart sshd
 
     - name: Install tools
       apt: name={{ item }} state=installed
@@ -57,7 +69,7 @@
         dest: /tmp/consul_0.8.5_linux_amd64.zip
 
     - name: Install Consul
-      command: unzip /tmp/consul_0.8.5_linux_amd64.zip -d /usr/local/bin
+      command: unzip -o /tmp/consul_0.8.5_linux_amd64.zip -d /usr/local/bin
 
     - name: Add service overlays
       copy:
@@ -67,6 +79,18 @@
         - docker.service
         - consul-agent.service
 
+    - name: Enable docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Enable consul
+      systemd:
+        name: consul-agent
+        state: started
+        enabled: yes
+
     - name: Add builder
       copy:
         src: files/build-all.sh
@@ -74,9 +98,3 @@
         owner: ubuntu
         group: ubuntu
         mode: 0744
-
-
-# TODO:
-# need to configure the sshd_config to run student inside student container:
-#  match group student
-#         forceCommand docker run --rm -it --net=host -v /var/run/docker.sock:/var/run/docker.sock student /bin/bash

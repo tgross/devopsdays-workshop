@@ -27,6 +27,9 @@ ok!
 * fetching environment variables...
 ok!
 
+* exporting workshop environment to a couple of config files...
+ok!
+
 * exporting workshop environment to your shell...
 ok!
 

@@ -19,16 +19,15 @@ Our demonstration application is a minimal HTTP API written in Python (using the
 
 We'll run the application in a Docker container.
 
-First, let's edit our config.json5 as follows:
+First, let's check our config.json5. It should have been modified on login to include your GitHub account as the `name` field.
 
 ```json5
 {
-  name: "<fill in your $ACCOUNT>",
+  name: "<your GitHub $ACCOUNT>",
   host: "localhost",
   port: 8080
 }
 ```
-
 
 ## Run on local host w/ NAT
 

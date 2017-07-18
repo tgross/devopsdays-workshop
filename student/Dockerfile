@@ -1,9 +1,5 @@
 # student/Dockerfile describes the environment that workshop students
-# will have when they ssh into a workshop host via the sshd_config:
-#   forceCommand docker run --rm -it
-#                       --net=host \
-#                       -v /var/run/docker.sock:/var/run/docker.sock \
-#                       student
+# will have when they ssh into a workshop host.
 
 FROM ubuntu:16.04
 
@@ -23,8 +19,8 @@ RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz
 
 # clone the workshop and make sure we've set up a bash profile
 # with the appropriate environment setup
-RUN git clone https://github.com/tgross/devopsdays-workshop /root/workshop \
-    && cp /root/workshop/.bash_aliases /root/.bash_aliases
+RUN git clone https://github.com/tgross/devopsdays-workshop /root/workshop
+COPY .bash_aliases  /root/.bash_aliases
 
 WORKDIR /root/workshop
 CMD [ "/bin/bash" ]

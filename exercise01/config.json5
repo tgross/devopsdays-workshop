@@ -1,5 +1,5 @@
 {
-  name: "tgross",     // TODO: fill in your GitHub username here
+  name: "GITHUB_ACCOUNT",
   host: "localhost",   // TODO: get this from environment
   port: 8080          // TODO: get this from environment
 }

@@ -21,6 +21,11 @@ public_ip=$(ifdata -pa net1)
 echo 'ok!'
 
 echo
+echo '* exporting workshop environment to a couple of config files...'
+find ~/workshop -name 'config.json5' | xargs sed -i "s/GITHUB_ACCOUNT/${account}/"
+echo 'ok!'
+
+echo
 echo '* exporting workshop environment to your shell...'
 export ACCOUNT=$account
 export PORT=$port
