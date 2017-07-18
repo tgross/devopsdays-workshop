@@ -1,2 +1,4 @@
 password.yml
+inventory
+*.retry
 *.pyc

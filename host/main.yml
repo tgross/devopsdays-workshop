@@ -2,8 +2,6 @@
 # This playbook deploys everything we need for prototype workshop host
 # Assumes an Ubuntu VM with Python pre-installed (b/c Ansible requires Python)
 
-- include: password.yml
-
 - hosts: workshop
   remote_user: ubuntu
   become: true
@@ -31,6 +29,8 @@
         state: restarted
         daemon_reload: yes
 
+    - include_vars: password.yml
+
     - name: Add student user
       user: name=student password={{ student_password }} shell=/bin/bash
 
@@ -48,11 +48,12 @@
         - curl
         - moreutils
         - git
+        - unzip
 
     - name: Download Consul
       get_url:
         url: https://releases.hashicorp.com/consul/0.8.5/consul_0.8.5_linux_amd64.zip
-        checksum: "SHA256:35dc317c80862c306ea5b1d9bc93709483287f992fd0797d214d1cc1848e7b62"
+        checksum: "sha256:35dc317c80862c306ea5b1d9bc93709483287f992fd0797d214d1cc1848e7b62"
         dest: /tmp/consul_0.8.5_linux_amd64.zip
 
     - name: Install Consul
@@ -70,6 +71,10 @@
       copy:
         src: files/build-all.sh
         dest: /home/ubuntu/build-all.sh
+        owner: ubuntu
+        group: ubuntu
+        mode: 0744
+
 
 # TODO:
 # need to configure the sshd_config to run student inside student container:
