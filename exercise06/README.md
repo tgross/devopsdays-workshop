@@ -1,3 +1,0 @@
-# Exercise 6: Integrating with the Scheduler
-
-This exercise...
