@@ -15,9 +15,8 @@ echo
 echo '* fetching environment variables...'
 port=$(awk 'BEGIN{srand();print int(rand()*(10000-8000))+8000 }')
 
-# TODO: check these interface names vs expected in VM
-private_ip=$(ifdata -pa net0)  # note: this requires 'moreutils'
-public_ip=$(ifdata -pa net1)
+private_ip=$(ifdata -pa net1)  # note: this requires 'moreutils'
+public_ip=$(ifdata -pa net0)
 echo 'ok!'
 
 echo
@@ -42,5 +41,7 @@ echo "PRIVATE_IP=$PRIVATE_IP"
 echo "PUBLIC_IP=$PUBLIC_IP"
 echo
 
+# otherwise we get the very long hostname
+export PS1="\u@workshop:\w\$ "
 
 alias cleanup='docker stop ${ACCOUNT} && docker rm ${ACCOUNT}'
