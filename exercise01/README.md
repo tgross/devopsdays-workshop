@@ -131,3 +131,17 @@ $ curl "localhost:${PORT}"
   "avatar_url": "https://avatars0.githubusercontent.com/u/1409219?v=3"
 }
 ```
+
+Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution. Suitable if you don't need multi-tenant safety.
+
+
+## Overlay networking
+
+A third option is to use an overlay networking solution -- which is a class of solutions that give each container its own network stack and IP address on the LAN. Some implementations:
+
+- Docker overlay networking: go see Jerome's workshop at 2:30pm!
+- Calico: based on BGP (strictly speaking not "overlay")
+- Flannel: VXLAN or platform-specific backends (ex. AWS VPC)
+- Triton: uses VXLAN for routing (demo Consul servers)
+
+Most of the major schedulers expect containers to have their own IP address. Kubernetes expects each pod of containers to have its own IP address which is shared among containers in the pod. Containers in the pod communicate with each other over localhost. Kubernetes provides CNI plugins for solutios like Flannel and Calico.
