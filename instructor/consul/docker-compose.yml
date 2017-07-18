@@ -1,0 +1,20 @@
+version: '2.1'
+
+services:
+
+  # Service definition for Consul cluster with a minimum of 3 nodes.
+  # Nodes will use Triton CNS for the service (passed in via the CONSUL
+  # env var) to find each other and bootstrap the cluster.
+  consul:
+    image: autopilotpattern/consul:0.7.3r39
+    labels:
+      - triton.cns.services=consul
+    restart: always
+    mem_limit: 512m
+    ports:
+      - 8500
+    environment:
+      - CONSUL=consul.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
+    network_mode: bridge
+    command: >
+      /usr/local/bin/containerpilot

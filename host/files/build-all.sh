@@ -2,6 +2,7 @@
 set -e
 
 root="$(pwd)/workshop"
+rm -rf "$root"
 git clone https://github.com/tgross/devopsdays-workshop "$root"
 
 cd "${root}/image-base"

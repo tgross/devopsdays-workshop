@@ -10,11 +10,12 @@ package="k4-highcpu-kvm-7.75G"
 # creates the prototype KVM instance
 _prototype_create() {
     local private public
-    private=$(triton network ls -l | awk -F' +' '/default/{print $1}')
+    private=$(triton network ls -l | awk -F' +' '/My-Fabric-Network/{print $1}')
     public=$(triton network ls -l | awk -F' +' '/Joyent-SDC-Public/{print $1}')
     triton instance create \
            --name="workshop-prototype" "${image}" "${package}" \
            --network="${public},${private}" \
+           --tag="sdc_docker=true" \
            --script=./userscript.sh
 
     echo -n 'waiting for prototype to enter running state...'

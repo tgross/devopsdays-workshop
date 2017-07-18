@@ -2,11 +2,13 @@
 Description=Consul service discovery agent
 
 [Service]
+ExecStartPre=/bin/mkdir -p /var/lib/consul
+ExecStartPre=/bin/mkdir -p /etc/consul
 ExecStart=/usr/local/bin/consul agent \
           -data-dir=/var/lib/consul \
+          -bind={% raw %}'{{ GetInterfaceIP "net1" }}'{% endraw %} \
           -config-dir=/etc/consul \
           -rejoin \
-          -retry-max 10 \
-          -retry-interval 10s
-          -retry-join consul.0f06a3e0-a0da-eb00-a7ae-989d4e44e2ad.cns.us-east-1.joyent.com \
+          -retry-interval 10s \
+          -retry-join consul.svc.{{ triton_cns_search_domain_private }}
 Restart=always

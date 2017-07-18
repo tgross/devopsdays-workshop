@@ -11,7 +11,13 @@
     - name: restart sshd
       service: name=sshd state=restarted
 
+    - name: restart docker
+      service: name=docker state=restarted
+
   tasks:
+
+      # previously-hashed password and CNS search domain
+    - include_vars: password.yml
 
     - name: Update apt key
       apt_key: keyserver='hkp://p80.pool.sks-keyservers.net:80'
@@ -26,15 +32,6 @@
 
     - name: Install docker
       apt: name=docker-engine state=installed
-
-    - name: Restart Docker
-      systemd:
-        name: docker
-        state: restarted
-        daemon_reload: yes
-
-      # previously-hashed password
-    - include_vars: password.yml
 
     - name: Add student user
       user: name=student password={{ student_password }} shell=/bin/bash
@@ -69,27 +66,36 @@
         dest: /tmp/consul_0.8.5_linux_amd64.zip
 
     - name: Install Consul
-      command: unzip -o /tmp/consul_0.8.5_linux_amd64.zip -d /usr/local/bin
+      unarchive:
+        src: /tmp/consul_0.8.5_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
 
-    - name: Add service overlays
+    - name: Add Docker service overlay
       copy:
-        src: files/{{ item }}
-        dest: /etc/systemd/system/{{ item }}
-      with_items:
-        - docker.service
-        - consul-agent.service
+        src: files/docker.service
+        dest: /etc/systemd/system/docker.service
+      notify:
+        - restart docker
 
-    - name: Enable docker
+    - name: Add Consul agent service overlay
+      template:
+        src: files/consul-agent.service
+        dest: /etc/systemd/system/consul-agent.service
+
+    - name: Enable Docker
       systemd:
         name: docker
         state: started
         enabled: yes
+        daemon_reload: yes
 
     - name: Enable consul
       systemd:
         name: consul-agent
         state: started
         enabled: yes
+        daemon_reload: yes
 
     - name: Add builder
       copy:
@@ -98,3 +104,6 @@
         owner: ubuntu
         group: ubuntu
         mode: 0744
+
+    - name: Run builder
+      command: /home/ubuntu/build-all.sh
