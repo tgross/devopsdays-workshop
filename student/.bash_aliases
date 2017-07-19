@@ -44,4 +44,9 @@ echo
 # otherwise we get the very long hostname
 export PS1="\u@workshop:\w\$ "
 
-alias cleanup='docker stop ${ACCOUNT} && docker rm ${ACCOUNT}'
+function cleanup {
+    docker stop "${ACCOUNT}"
+    docker rm "${ACCOUNT}"
+    curl -s -o /dev/null -XPUT "localhost:8500/v1/agent/check/deregister/${ACCOUNT}"
+    curl -s -o /dev/null -XPUT "localhost:8500/v1/agent/service/deregister/workshop-${ACCOUNT}"
+}

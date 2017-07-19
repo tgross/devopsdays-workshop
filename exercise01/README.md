@@ -109,7 +109,7 @@ Edit our config.json5 as follows:
 
 ```json5
 {
-  name: "<fill in your $ACCOUNT>",
+  name: "<your GitHub $ACCOUNT>",
   host: "localhost",
   port: <fill in your $PORT>
 }
@@ -148,7 +148,7 @@ Edit our config.json5 as follows:
 
 ```json5
 {
-  name: "<fill in your $ACCOUNT>",
+  name: "<your GitHub $ACCOUNT>",
   host: "<fill in your $PUBLIC_IP",
   port: <fill in your $PORT>
 }
