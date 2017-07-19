@@ -8,5 +8,5 @@ nginx &
 
 # watch Consul in the background and render its config file watch
 consul-template \
-    -template "site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx" \
-    -template "index.html:/usr/share/nginx/index.html"
+    -template "/site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx" \
+    -template "/index.html:/usr/share/nginx/index.html"
