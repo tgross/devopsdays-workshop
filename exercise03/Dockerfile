@@ -7,4 +7,4 @@ COPY index.html /index.html
 COPY site.conf /site.conf
 COPY run.sh /run.sh
 
-COMMAND [ "/run.sh" ]
+CMD [ "/run.sh" ]

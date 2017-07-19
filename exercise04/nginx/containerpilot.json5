@@ -1,0 +1,44 @@
+{
+  consul: "localhost:8500",
+  jobs: [
+    {
+      // at startup we'll run consul-template in one-time mode.
+      // this job isn't advertised to Consul.
+      name: "pre-start",
+      exec: [
+        "consul-template", "-once",
+        "-template", "'/site.conf:/etc/nginx/conf.d/site.conf'",
+        "-template", "'/index.html:/usr/share/nginx/index.html'"
+      ]
+    },
+    {
+      name: "nginx",
+      exec: "nginx",
+      when: {
+        source: "pre-start",
+        once: "exitSuccess"      // start this job when the pre-start job succeeds
+      },
+      restarts: "unlimited",
+      port: {{ .PORT }},         // will be read from environment
+      interfaces: [ "net0" ],    // ordered list, advertises 1st valid one
+      health: {
+        exec: "/health-check.sh",
+        interval: 5,
+        ttl: 11,
+      }
+    },
+    {
+      name: "consul-template",
+      exec: [
+        "consul-template",
+        "-template", "'/site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx'",
+        "-template", "'/index.html:/usr/share/nginx/index.html'"
+      ],
+      restarts: "unlimited",
+      when: {
+        source: "nginx",
+        once: "healthy"  // start this job once Nginx passes a health check
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  consul: "localhost:8500",
+  jobs: [
+    {
+      name: "workshop",
+      exec: "python /server.py",
+      restarts: "unlimited",
+      port: {{ .PORT }},              // will be read from environment
+      interfaces: [ "net1", "lo0" ],  // ordered list, advertises 1st valid one
+      health: {
+        exec: "/health-check.sh",
+        interval: 5,
+        ttl: 11,
+      }
+    }
+  ]
+}

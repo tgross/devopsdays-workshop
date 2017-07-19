@@ -2,6 +2,7 @@
 
 # rewrite the template config for Nginx
 sed -i "s/PUBLIC_IP/${PUBLIC_IP}/" /site.conf
+sed -i "s/PUBLIC_PORT/${PORT}/" /site.conf
 
 # run Nginx in the background
 nginx &
