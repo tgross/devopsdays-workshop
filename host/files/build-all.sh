@@ -23,3 +23,7 @@ docker build -t="workshop-nginx-cp" .
 
 cd "${root}/exercise04/app"
 docker build -t="workshop-py-cp" .
+
+
+# clean up any orphan builds
+docker image prune -f
