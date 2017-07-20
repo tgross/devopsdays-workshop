@@ -133,7 +133,9 @@ $ docker build -t nginx-$ACCOUNT .
 $ docker run -d \
          --init \
          -e PUBLIC_IP=${PUBLIC_IP} \
-         -p ${PORT}:${PORT} --net=host \
+         -e PORT=${PORT} \
+         -p ${PORT}:${PORT} \
+         --net=host \
          --name "nginx-$ACCOUNT" \
          "nginx-$ACCOUNT"
 920dde8005ee
