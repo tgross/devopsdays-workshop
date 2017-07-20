@@ -3,20 +3,21 @@
 <style>
 #container {
   display: grid;
-  grid: repeat(5, 160px) / auto-flow 160px;
+  grid: repeat(5, 210px) / auto-flow 210px;
 }
 
 #container > iframe {
-  background-color: #8ca0ff;
-  width: 150px;
-  height: 150px;
+  background-color: #e0e0e0;
+  width: 170px;
+  height: 200px;
 }
 </style>
 </head>
 <body>
   <div id="container">
+    <!-- we round-robin all the users -->
     {{ range service "workshop" }}
-    <iframe src="/user" />  <!-- we round-robin all the users -->
+    <iframe src="/user" />
     {{ end }}
   </div>
 </body>

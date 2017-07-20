@@ -37,7 +37,7 @@ def user():
     data = req.json()
     avatar_url = data['avatar_url']
     return template("""<div><h2>{{name}}</h2>
-                       <div><img src={{url}} height="200", width="200"/>
+                       <div><img src={{url}} height="150", width="150"/>
                        </div></div>""",
                     url=avatar_url, name=app.config['name'])
 
