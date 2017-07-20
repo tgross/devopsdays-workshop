@@ -24,6 +24,7 @@ First, let's check our config.json5. It should have been modified on login to in
 ```json5
 {
   name: "<your GitHub $ACCOUNT>",
+  token: "<GitHub OAuth token>",
   host: "localhost",
   port: 8080
 }
@@ -108,6 +109,7 @@ Edit our config.json5 as follows:
 ```json5
 {
   name: "<your GitHub $ACCOUNT>",
+  token: "<GitHub OAuth token>",
   host: "localhost",
   port: <fill in your $PORT>
 }
@@ -149,6 +151,7 @@ Edit our config.json5 as follows:
 ```json5
 {
   name: "<your GitHub $ACCOUNT>",
+  token: "<GitHub OAuth token>",
   host: "<fill in your $PUBLIC_IP",
   port: <fill in your $PORT>
 }

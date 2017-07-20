@@ -44,7 +44,7 @@
         - ubuntu
 
     - name: Update sshd config
-      copy:
+      template:
         src: files/sshd_config
         dest: /etc/ssh/sshd_config
       notify:

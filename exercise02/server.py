@@ -31,7 +31,9 @@ def register_check():
 @lru_cache(maxsize=1)
 @route('/')
 def user():
-    req = requests.get('https://api.github.com/users/{}'.format(app.config['name']))
+    req = requests.get(
+        'https://api.github.com/users/{}'.format(app.config['name']),
+        headers={'Authorization:': 'token {}'.format(app.config['token'])})
     data = req.json()
     avatar_url = data['avatar_url']
     return { "user": app.config['name'], "url": avatar_url }

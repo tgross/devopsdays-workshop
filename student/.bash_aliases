@@ -22,6 +22,7 @@ echo 'ok!'
 echo
 echo '* exporting workshop environment to a couple of config files...'
 find ~/workshop -name 'config.json5' | xargs sed -i "s/GITHUB_ACCOUNT/${account}/"
+find ~/workshop -name 'config.json5' | xargs sed -i "s/OAUTH_TOKEN/${OAUTH_TOKEN}/"
 echo 'ok!'
 
 echo

@@ -26,6 +26,7 @@ We can modify our API server to automatically register itself with Consul on sta
 ```json5
 {
   name: "<your GitHub $ACCOUNT>",
+  token: "<GitHub OAuth token>",
   host: "<fill in your $PRIVATE_IP>",
   port: <fill in your $PORT>
 }

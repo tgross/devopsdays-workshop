@@ -90,4 +90,4 @@ UsePAM yes
 AllowUsers ubuntu student
 
 Match User student
-      ForceCommand docker run --rm -it --net=host -v /var/run/docker.sock:/var/run/docker.sock student /bin/bash
+      ForceCommand docker run --rm -it -e OAUTH_TOKEN={{ oauth_token }} --net=host -v /var/run/docker.sock:/var/run/docker.sock student /bin/bash
