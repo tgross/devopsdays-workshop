@@ -1,28 +1,10 @@
 from functools import lru_cache
+import os
+
 import bottle
 from bottle import route, run, template
-import consul
 import json5
 import requests
-
-# ----------------------------------------
-# service registration
-
-SERVICE_NAME = 'workshop' # don't edit this!
-
-def register_service():
-    c = consul.Consul()
-    service_id = '{}-{}'.format(SERVICE_NAME, app.config['name'])
-    c.agent.service.register(name=SERVICE_NAME,
-                             service_id=service_id,
-                             address=app.config['host'],
-                             port=app.config['port'])
-
-def register_check():
-    c = consul.Consul()
-    url = 'http://{}:{}'.format(app.config['host'], app.config['port'])
-    c.agent.check.register(name=app.config['name'],
-                           check=consul.Check.http(url, '10s'))
 
 
 # ----------------------------------------
@@ -44,13 +26,15 @@ def user():
 
 # ----------------------------------------
 # configure and run the server
+# note we're getting the values from environment now rather
+# than from a file
 
 app = bottle.default_app()
-with open('./config.json5', 'r') as f:
-    cfg_file = f.read()
-    app.config.load_dict(json5.loads(cfg_file))
-
-register_service()
-#register_check()
+app.config.load_dict({
+    "name": os.environ['ACCOUNT'],
+    "token": os.environ['OAUTH_TOKEN'],
+    "host": os.environ.get('CONTAINERPILOT_WORKSHOP_IP', 'localhost'),
+    "port": os.environ.get('PORT', 8080)
+    })
 
 run(host=app.config['host'], port=app.config['port'])
