@@ -11,6 +11,7 @@ RUN apt-get update \
             emacs-nox \
             vim \
             nano \
+            jq \
             moreutils \
     && rm -rf /var/lib/apt/lists/*
 

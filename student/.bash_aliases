@@ -44,6 +44,9 @@ echo
 # otherwise we get the very long hostname
 export PS1="\u@workshop:\w\$ "
 
+# make sure we get newlines after our curl requests for legibility
+echo '-w "\n"' > ~/.curlrc
+
 function cleanup {
     docker stop "${ACCOUNT}"
     docker rm "${ACCOUNT}"

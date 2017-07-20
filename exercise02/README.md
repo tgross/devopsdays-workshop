@@ -54,7 +54,7 @@ Let's build and run our API server with the new code:
 $ cleanup
 
 # rebuild with the new config file
-$ docker build -t="workshop-$ACCOUNT"
+$ docker build -t="workshop-$ACCOUNT" .
 
 # run the container again
 $ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"
@@ -103,7 +103,7 @@ And then run our container again:
 $ cleanup
 
 # rebuild with the new config file
-$ docker build -t="workshop-$ACCOUNT"
+$ docker build -t="workshop-$ACCOUNT" .
 
 # run the container again
 $ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"

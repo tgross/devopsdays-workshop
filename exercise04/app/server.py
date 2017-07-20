@@ -12,7 +12,7 @@ SERVICE_NAME = 'workshop' # don't edit this!
 
 def register_service():
     c = consul.Consul()
-    service_id = '{}-{}'.format(SERVICE_NAME, app.config['user'])
+    service_id = '{}-{}'.format(SERVICE_NAME, app.config['name'])
     c.agent.service.register(name=SERVICE_NAME,
                              service_id=service_id,
                              address=app.config['host'],
@@ -21,7 +21,7 @@ def register_service():
 def register_check():
     c = consul.Consul()
     url = 'http://{}:{}'.format(app.config['host'], app.config['port'])
-    c.agent.check.register(name=app.config['user'],
+    c.agent.check.register(name=app.config['name'],
                            check=consul.Check.http(url, '10s'))
 
 

@@ -33,7 +33,7 @@ First, let's check our config.json5. It should have been modified on login to in
 
 ```bash
 # build and run the container using the default networking
-$ docker build -t="workshop-$ACCOUNT"
+$ docker build -t="workshop-$ACCOUNT" .
 $ docker run -d -p 8080 --name "$ACCOUNT" "workshop-$ACCOUNT"
 920dde8005ee
 
@@ -54,8 +54,6 @@ curl: (52) Empty reply from server
 ```
 
 ## Run on localhost w/ host networking, fixed port
-
-
 
 
 ```bash
@@ -120,7 +118,7 @@ Edit our config.json5 as follows:
 $ cleanup
 
 # rebuild with the new config file
-$ docker build -t="workshop-$ACCOUNT"
+$ docker build -t="workshop-$ACCOUNT" .
 
 # run the container again
 $ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"
@@ -131,10 +129,12 @@ CONTAINER ID        IMAGE               COMMAND              CREATED            
 eb4234756abc        workshop-tgross     "python server.py"   1 minute ago       Up 1 minute        0.0.0.0:8080->8080/tcp   tgross
 
 $ curl "localhost:${PORT}"
-{
-  "user": "tgross",
-  "avatar_url": "https://avatars0.githubusercontent.com/u/1409219?v=3"
-}
+<div>
+  <h2>tgross</h2>
+  <div>
+    <img src=https://avatars3.githubusercontent.com/u/1409219?v=4 height="200", width="200"/>
+  </div>
+</div>
 ```
 
 Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution. Suitable if you don't need multi-tenant safety.
