@@ -13,7 +13,7 @@ echo -n '* checking that you have access to Docker engine on host... '
 docker ps > /dev/null && echo 'ok!' || echo 'failed!'
 
 echo -n '* fetching environment variables... '
-port=$(awk 'BEGIN{srand();print int(rand()*(10000-8000))+8000 }')
+port=$(awk 'BEGIN{srand();print int(rand()*(15000-9000))+9000 }')
 
 private_ip=$(ifdata -pa net1)  # note: this requires 'moreutils'
 public_ip=$(ifdata -pa net0)
