@@ -13,7 +13,7 @@ $ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOU
 abc34a456aee
 
 # query Consul
-$ curl http://localhost:8500/v1/health/service/workshop | less
+$ curl http://localhost:8500/v1/health/service/workshop | jq .
 ...
 ```
 

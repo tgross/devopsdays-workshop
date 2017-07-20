@@ -33,11 +33,13 @@ def register_check():
 def user():
     req = requests.get(
         'https://api.github.com/users/{}'.format(app.config['name']),
-        headers={'Authorization:': 'token {}'.format(app.config['token'])})
+        headers={'Authorization': 'token {}'.format(app.config['token'])})
     data = req.json()
     avatar_url = data['avatar_url']
-    return { "user": app.config['name'], "url": avatar_url }
-
+    return template("""<div><h2>{{name}}</h2>
+                       <div><img src={{url}} height="200", width="200"/>
+                       </div></div>""",
+                    url=avatar_url, name=app.config['name'])
 
 
 # ----------------------------------------

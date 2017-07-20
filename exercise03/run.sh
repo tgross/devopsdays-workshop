@@ -9,7 +9,7 @@ sed -i "s/PORT/${PORT}/" /site.conf
 consul-template \
     -once \
     -template "/site.conf:/etc/nginx/conf.d/site.conf" \
-    -template "/index.html:/usr/share/nginx/index.html"
+    -template "/index.html:/usr/share/nginx/html/index.html"
 
 # run Nginx in the background
 nginx &
@@ -17,4 +17,4 @@ nginx &
 # watch Consul in the background and render its config file watch
 consul-template \
     -template "/site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx" \
-    -template "/index.html:/usr/share/nginx/index.html"
+    -template "/index.html:/usr/share/nginx/html/index.html"

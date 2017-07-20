@@ -28,7 +28,7 @@ def user():
 def get_avatar():
     req = requests.get(
         'https://api.github.com/users/{}'.format(app.config['name']),
-        headers={'Authorization:': 'token {}'.format(app.config['token'])})
+        headers={'Authorization': 'token {}'.format(app.config['token'])})
     data = req.json()
     return data['avatar_url']
 
