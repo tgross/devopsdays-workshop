@@ -1,0 +1,31 @@
+# student/BaseDockerfile describes the base environment that we use to build
+# the workshop containers.
+
+FROM ubuntu:16.04
+
+RUN apt-get update \
+    && apt-get install -y \
+            ca-certificates \
+            curl \
+            git \
+            emacs-nox \
+            vim \
+            nano \
+            jq \
+            moreutils \
+            unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSLO "https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz" \
+    && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
+
+RUN curl -fsSLO "https://releases.hashicorp.com/consul-template/0.19.0/consul-template_0.19.0_linux_amd64.tgz" \
+    && tar -xvzf consul-template_0.19.0_linux_amd64.tgz -C /usr/local/bin
+
+ADD https://releases.hashicorp.com/nomad/0.5.6/nomad_0.5.6_linux_amd64.zip /tmp/nomad.zip
+RUN echo "3f5210f0bcddf04e2cc04b14a866df1614b71028863fe17bcdc8585488f8cb0c  /tmp/nomad.zip" > /tmp/nomad.sha256 \
+    && sha256sum -c /tmp/nomad.sha256 \
+    && cd /bin \
+    && unzip /tmp/nomad.zip \
+    && chmod +x /bin/nomad \
+    && rm /tmp/nomad.zip

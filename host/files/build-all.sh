@@ -13,7 +13,8 @@ cd "${root}/image-base"
 docker build -t="workshop-py" .
 
 cd "${root}/student"
-docker build -t="student" .
+docker build -t="student-base" -f BaseDockerfile .
+docker build --no-cache -t="student" .
 
 cd "${root}/exercise03"
 docker build -t="workshop-nginx" .
