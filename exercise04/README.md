@@ -19,6 +19,7 @@ $ docker run -d \
 4528005eedde
 
 # build and run the Nginx server
+$ cd ../nginx
 $ docker build -t nginx-$ACCOUNT .
 ...
 $ docker run -d \

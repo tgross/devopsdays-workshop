@@ -7,8 +7,8 @@
       name: "pre-start",
       exec: [
         "consul-template", "-once",
-        "-template", "'/site.conf:/etc/nginx/conf.d/site.conf'",
-        "-template", "'/index.html:/usr/share/nginx/html/index.html'"
+        "-template", "/site.conf:/etc/nginx/conf.d/site.conf",
+        "-template", "/index.html:/usr/share/nginx/html/index.html"
       ]
     },
     {
@@ -31,8 +31,8 @@
       name: "consul-template",
       exec: [
         "consul-template",
-        "-template", "'/site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx'",
-        "-template", "'/index.html:/usr/share/nginx/html/index.html'"
+        "-template", "/site.conf:/etc/nginx/conf.d/site.conf:pkill -SIGHUP nginx",
+        "-template", "/index.html:/usr/share/nginx/html/index.html"
       ],
       restarts: "unlimited",
       when: {
