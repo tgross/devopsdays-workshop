@@ -1,7 +1,7 @@
 # Instructor Notes
 
 
-## Set up prototype
+## Set up Workshops
 
 Create `./host/password.yml` with the following values:
 
@@ -13,12 +13,12 @@ oauth_token: xxxxxxxx
 
 The `student_password` should come from the results of `$(mkpasswd --method=sha-512)`, and the `oauth_token` should be a GitHub OAuth token with no privileges (we need this to bypass rate limiting for unauthenticated requests to the GitHub API).
 
-## Set up Consul
+## Set up Cluster
 
 ```
-# stand up Consul cluster
+# stand up Consul and Nomad cluster
 
-cd ./instructor/consul
+cd ./instructor
 triton-compose -p workshop up -d
-triton-compose -p workshop scale consul=3
+triton-compose -p workshop scale consul=3 nomad=3
 ```

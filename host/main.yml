@@ -71,6 +71,18 @@
         dest: /usr/local/bin
         remote_src: yes
 
+    - name: Download Nomad
+      get_url:
+        url: https://releases.hashicorp.com/nomad/0.5.6/nomad_0.5.6_linux_amd64.zip
+        checksum: "sha256:3f5210f0bcddf04e2cc04b14a866df1614b71028863fe17bcdc8585488f8cb0c"
+        dest: /tmp/nomad_0.5.6_linux_amd64.zip
+
+    - name: Install Nomad
+      unarchive:
+        src: /tmp/nomad_0.5.6_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+
     - name: Add Docker service overlay
       copy:
         src: files/docker.service
@@ -83,6 +95,16 @@
         src: files/consul-agent.service
         dest: /etc/systemd/system/consul-agent.service
 
+    - name: Add Nomad agent service overlay
+      template:
+        src: files/nomad-agent.service
+        dest: /etc/systemd/system/nomad-agent.service
+
+    - name: Add Nomad agent config
+      template:
+        src: files/nomad-agent.hcl
+        dest: /etc/nomad.hcl
+
     - name: Enable Docker
       systemd:
         name: docker
@@ -93,6 +115,13 @@
     - name: Enable consul
       systemd:
         name: consul-agent
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+    - name: Enable nomad
+      systemd:
+        name: nomad-agent
         state: started
         enabled: yes
         daemon_reload: yes

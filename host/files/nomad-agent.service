@@ -1,0 +1,8 @@
+[Unit]
+Description=Nomad cluster agent
+
+[Service]
+ExecStartPre=/bin/mkdir -p /var/lib/nomad/data
+ExecStart=/usr/local/bin/nomad agent \
+          -config=/etc/nomad.hcl
+Restart=always

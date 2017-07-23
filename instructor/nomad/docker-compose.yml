@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+
+  # Service definition for Nomad cluster with a minimum of 3 nodes.
+  nomad:
+    image: 0x74696d/nomad-server
+    labels:
+      - triton.cns.services=nomad
+    restart: always
+    mem_limit: 512m
+    network_mode: bridge
