@@ -31,38 +31,43 @@ _prototype_create() {
 }
 
 
-_prototype_provision() {
-    _inventory "workshop-prototype"
-    ansible-playbook -i ./inventory ./main.yml
-}
-
-_prototype_snapshot() {
-    _inventory "workshop-prototype"
-    # TODO
+_provision() {
+    _inventory
+    ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ./inventory ./main.yml
 }
 
 _workshop_deploy() {
-    count="${1:-1}"
+    count="${2:-1}"
+    local private public
+    private=$(triton network ls -l | awk -F' +' '/My-Fabric-Network/{print $1}')
+    public=$(triton network ls -l | awk -F' +' '/Joyent-SDC-Public/{print $1}')
+
     echo "deploying $count instances..."
-    # TODO
+    for i in $(seq 1 $count); do
+        triton instance create \
+               --name="workshop-$i" "${image}" "${package}" \
+               --network="${public},${private}" \
+               --tag="sdc_docker=true" \
+               --script=./userscript.sh
+    done
 }
 
 _inventory() {
-    name="$1"
+    echo 'updating inventory...'
     echo '[workshop]' > inventory
-    triton ip "${name}" >> inventory
+    for i in $(triton ls | awk '/workshop-/{print $1}'); do
+        triton ip "$i" >> inventory
+    done
 }
-
-
 
 # ---------------------------------------------------
 # parse arguments
 
 while true; do
     case $1 in
+        inventory) _inventory; break;;
         create ) _prototype_create; _prototype_provision; exit; break;;
-        provision ) _prototype_provision; exit; break;;
-        snapshot ) _prototype_snapshot; exit; break;;
+        provision ) _provision; exit; break;;
         up) _workshop_deploy "${@}"; exit; break;;
         *) break;;
     esac

@@ -2,3 +2,4 @@ password.yml
 inventory
 *.retry
 *.pyc
+instructor/announce.html
