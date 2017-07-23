@@ -7,4 +7,4 @@ RUN curl -fsSLO "https://github.com/joyent/containerpilot/releases/download/3.3.
     && tar -xvzf containerpilot-3.3.0.tar.gz -C /usr/local/bin
 
 COPY . ./
-CMD [ "containerpilot", "-config", "/containerpilot.json" ]
+CMD [ "containerpilot", "-config", "/containerpilot.json5" ]
