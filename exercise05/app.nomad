@@ -4,28 +4,33 @@ job "workshop-<TODO>" {
 
   type = "service"
 
+  constraint = {
+    attribute = "${attr.kernel.version}"
+    operator = ">="
+    value = "4.0.0"
+  }
+
   # A group is the Nomad equivalent of a Kubernetes "pod": a collection
   # of tasks that should be co-located on the same host.
   group "workshop" {
 
     count = 1
 
-    # Create an individual task (unit of work). This particular
-    # task utilizes a Docker container to front a web application.
-    task "frontend" {
+    task "app" {
 
       # we're going to deploy a Docker container that's been
       # previously built (this is the image in the app/ directory)
       driver = "docker"
       config {
         image = "0x74696d/devopsdays-workshop"
+        network_mode = "host"
       }
 
       # The service block tells Nomad how to register this service
       # with Consul for service discovery and monitoring.
       service {
         name = "workshop"
-        port = "http"
+        port = "HTTP"
         check {
           type     = "http"
           path     = "/"
@@ -54,7 +59,7 @@ job "workshop-<TODO>" {
           # this will expose the environment variables
           # NOMAD_IP_HTTP and NOMAD_PORT_HTTP
           # which our application will use
-          port "http" {}
+          port "HTTP" {}
         }
       }
     }
