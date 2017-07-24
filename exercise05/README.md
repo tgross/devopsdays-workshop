@@ -2,7 +2,7 @@
 
 In this exercise we take all the work we've done previously and make it work with a scheduler to solve the problems of placement and network allocation without our manual intervention.
 
-We'll be using [Nomad](https://nomadproject.com) from Hashicorp. Nomad serves a similar purpose as other schedulers such as Kubernetes or Mesos/Marathon. Nomad is somewhat less feature rich than Kubernetes, but has some distinct advantages as well:
+We'll be using [Nomad](https://www.nomadproject.io/) from Hashicorp. Nomad serves a similar purpose as other schedulers such as Kubernetes or Mesos/Marathon. Nomad is somewhat less feature rich than Kubernetes, but has some distinct advantages as well:
 
 - The deployment is a single binary; a development environment can be just the Nomad binary which can launch Docker containers on your laptop.
 - The overhead of deployment is minimal; a production cluster has an overhead of just 3 server nodes, which can share a host with the Consul servers.
