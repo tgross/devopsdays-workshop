@@ -26,7 +26,16 @@ ContainerPilot runs as PID1 inside the container. It reads a configuration file 
 }
 ```
 
-Note that our `server.py` code no longer needs the service registration code. This demonstrates how we can use ContainerPilot even for applications don't directly support service discovery (like most databases).
+Note that our `server.py` code no longer needs the service registration code. This demonstrates how we can use ContainerPilot even for applications don't directly support service discovery (like most databases). But it does need to accept some values from the environment:
+
+```python
+app.config.load_dict({
+    "name": os.environ['ACCOUNT'],
+    "token": os.environ['OAUTH_TOKEN'],
+    "host": os.environ.get('CONTAINERPILOT_WORKSHOP_IP', 'localhost'),
+    "port": os.environ.get('PORT', 8080)
+    })
+```
 
 The Nginx configuration in `./nginx/containerpilot.json5` is more complex. Here we have 3 jobs and two of them have a `when` field, which says not to start them until another job has completed. The `when` field can respond to success/failure, healthy/unhealthy, a change in the number of instances, etc. We're not showing it in this workshop, but ContainerPilot has a `watch` configuration option that allows it to monitor a service in Consul and respond to changes there.
 

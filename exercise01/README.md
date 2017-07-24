@@ -181,4 +181,8 @@ A third option is to use an overlay networking solution -- which is a class of s
 - Flannel: VXLAN or platform-specific backends (ex. AWS VPC)
 - Triton: uses VXLAN for routing (demo Consul servers)
 
+Our demo Consul servers are running as bare-metal containers on Triton, where each container gets a virtual NIC on a layer 2 private VLAN, and an optional VNIC on public routable network.
+
 Most of the major schedulers expect containers to have their own IP address. Kubernetes expects each pod of containers to have its own IP address which is shared among containers in the pod. Containers in the pod communicate with each other over localhost. Kubernetes provides CNI plugins for solutios like Flannel and Calico.
+
+Each platform implements this differently; value is that IP address you see in the container is the IP that other containers in the data center would use to connect it.

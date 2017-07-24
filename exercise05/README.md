@@ -53,6 +53,19 @@ service {
 }
 ```
 
+Note that we've updated our `server.py` application to take some different environment variables from the last exercise:
+
+```python
+app.config.load_dict({
+    "name": os.environ['ACCOUNT'],
+    "token": os.environ['OAUTH_TOKEN'],
+    "host": os.environ.get('NOMAD_IP_HTTP', 'localhost'),
+    "port": os.environ.get('NOMAD_PORT_HTTP', 8080)
+    })
+```
+
+These "NOMAD" environment variables are set because of the `port` field we set in the `service` block above.
+
 Check the plan:
 
 ```
