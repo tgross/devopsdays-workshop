@@ -139,7 +139,7 @@ $ curl "localhost:${PORT}"
 </div>
 ```
 
-Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution or NAT. Note that in typical cloud environments you already have significant performance hits in networking due to hardware virtualization (+80% latency in a [2014 report from IBM](https://github.com/thewmf/kvm-docker-comparison)!), so adding a similar level of overhead on top of that is an extra hit. Host networking is suitable if you don't need multi-tenant safety.
+Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution or NAT. Note that in typical cloud environments you already have significant performance hits in networking due to hardware virtualization (+80% latency in a [2014 report from IBM (PDF)](https://domino.research.ibm.com/library/cyberdig.nsf/papers/0929052195DD819C85257D2300681E7B/$File/rc25482.pdf)!), so adding a similar level of overhead on top of that is an extra hit. Host networking is suitable if you don't need multi-tenant safety.
 
 
 ## Run on public IP w/ host networking, random port
