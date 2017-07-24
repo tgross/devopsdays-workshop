@@ -139,7 +139,7 @@ $ curl "localhost:${PORT}"
 </div>
 ```
 
-Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution. Suitable if you don't need multi-tenant safety.
+Note that this requires cooperation of the application to accept an assigned dynamic port, but it avoids all overhead associated with an overlay networking solution or NAT. Note that in typical cloud environments you already have significant performance hits in networking due to hardware virtualization (+80% latency in a [2014 report from IBM](https://github.com/thewmf/kvm-docker-comparison)!), so adding a similar level of overhead on top of that is an extra hit. Host networking is suitable if you don't need multi-tenant safety.
 
 
 ## Run on public IP w/ host networking, random port
@@ -181,7 +181,13 @@ A third option is to use an overlay networking solution -- which is a class of s
 - Flannel: VXLAN or platform-specific backends (ex. AWS VPC)
 - Triton: uses VXLAN for routing (demo Consul servers)
 
-Our demo Consul servers are running as bare-metal containers on Triton, where each container gets a virtual NIC on a layer 2 private VLAN, and an optional VNIC on public routable network.
+Our demo Consul servers are running as bare-metal containers on Triton, where each container gets a virtual NIC on a layer 2 private VLAN, and an optional VNIC on public routable network:
+
+```
+$ docker exec -it workshop_consul_1 ip addr
+TODO
+
+```
 
 Most of the major schedulers expect containers to have their own IP address. Kubernetes expects each pod of containers to have its own IP address which is shared among containers in the pod. Containers in the pod communicate with each other over localhost. Kubernetes provides CNI plugins for solutios like Flannel and Calico.
 
