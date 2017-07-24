@@ -6,6 +6,7 @@ Deploying applications in containers and connecting them together is a challenge
 
 But even if we accept this premise, we can’t simply rewrite all our applications, so we need a way to build application containers that can knit together legacy and greenfield applications alike. In this hands-on workshop, we will build a microservices application. Starting from simple open source components, we’ll add tooling that turns these applications into a modern self-assembling stack.
 
+This workshop is intended to be accessible to developers and operators who may beginners in the container ecosystem, and will focus a lot on the "why" questions around containers, schedulers, and networking in contrinzerized environments.
 
 ## Exercises
 
