@@ -1,4 +1,4 @@
-job "workshop-<TODO>" {
+job "workshop-ENV_ACCOUNT" {
 
   datacenters = ["dc1"]
 
@@ -42,8 +42,8 @@ job "workshop-<TODO>" {
       # Set environment variables which will be
       # available to the job when it runs.
       env {
-        "OAUTH_TOKEN" = "<TODO>" # TODO: fill this in
-        "ACCOUNT" = "<TODO>"     # TODO: fill this in
+        "OAUTH_TOKEN" = "ENV_OAUTH_TOKEN"
+        "ACCOUNT" = "ENV_ACCOUNT"
       }
 
       # Specify the maximum resources required to run the job,

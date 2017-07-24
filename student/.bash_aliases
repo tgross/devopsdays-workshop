@@ -22,6 +22,8 @@ echo 'ok!'
 echo -n '* exporting workshop environment to a couple of config files... '
 find ~/workshop -name 'config.json5' | xargs sed -i "s/GITHUB_ACCOUNT/${account}/"
 find ~/workshop -name 'config.json5' | xargs sed -i "s/OAUTH_TOKEN/${OAUTH_TOKEN}/"
+find ~/workshop/exercise05 -name 'app.nomad' | sed -i "s/ENV_ACCOUNT/${account}/g"
+find ~/workshop/exercise05 -name 'app.nomad' | sed -i "s/ENV_OAUTH_TOKEN/${OAUTH_TOKEN}/g"
 echo 'ok!'
 
 echo -n '* exporting workshop environment to your shell... '
