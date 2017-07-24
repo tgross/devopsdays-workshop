@@ -185,8 +185,18 @@ Our demo Consul servers are running as bare-metal containers on Triton, where ea
 
 ```
 $ docker exec -it workshop_consul_1 ip addr
-TODO
-
+1: lo: <LOOPBACK,MULTICAST,UP> mtu 8232
+    link/loopback 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host dynamic
+    inet6 ::1/128 scope host dynamic
+2: eth0: <BROADCAST,MULTICAST,UP> mtu 8500 qlen 1
+    link/ether 90:b8:d0:e5:d2:0c
+    inet 192.168.129.110/22 scope site dynamic
+    inet6 fe80::92b8:d0ff:fee5:d20c/10 scope link dynamic
+3: eth1: <BROADCAST,MULTICAST,UP> mtu 1500 qlen 1
+    link/ether 90:b8:d0:23:cc:0a
+    inet 72.2.113.151/22 scope global dynamic
+    inet6 fe80::92b8:d0ff:fe23:cc0a/10 scope link dynamic
 ```
 
 Most of the major schedulers expect containers to have their own IP address. Kubernetes expects each pod of containers to have its own IP address which is shared among containers in the pod. Containers in the pod communicate with each other over localhost. Kubernetes provides CNI plugins for solutios like Flannel and Calico.
