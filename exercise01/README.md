@@ -162,7 +162,7 @@ Edit our config.json5 as follows:
 $ cleanup
 
 # rebuild with the new config file
-$ docker build -t="workshop-$ACCOUNT"
+$ docker build -t="workshop-$ACCOUNT" .
 
 # run the container again
 $ docker run -d -p ${PORT}:${PORT} --net=host --name "$ACCOUNT" "workshop-$ACCOUNT"
