@@ -11,7 +11,7 @@ The goal of any service catalog is to be able to answer the question "where can 
 Each of the Docker hosts in our lab has a Consul agent running, and this Consul agent gossips configuration values with a 3-node cluster of Consul servers. You should be able to reach Consul from the localhost:
 
 ```bash
-$ curl https://localhost:8500/v1/status/peers
+$ curl http://localhost:8500/v1/status/peers
 [
   "192.168.1.12:8300",
   "192.168.1.11:8300",
